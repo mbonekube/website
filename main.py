@@ -1,7 +1,12 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template
 from datetime import date
 import requests
 import smtplib
+from flask_bootstrap import Bootstrap
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField, TextAreaField
+from wtforms.validators import DataRequired, Email
+
 
 MY_EMAIL = "egabtech@yahoo.com"
 YAHOO_APP_PASSWORD = "kbpvztnpzmcuzpmq"     # This is not my yahoo password, it's a password generated to work with
@@ -11,6 +16,16 @@ TO_EMAIL = "egabtek@gmail.com"              # third-party apps.
 posts = requests.get("https://api.npoint.io/68f89237263cd44a2e48").json()
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+Bootstrap(app)
+
+
+class Contact(FlaskForm):
+    name = StringField('Name', validators=[DataRequired()])
+    email = StringField("Email address", validators=[DataRequired(), Email()])
+    phone = StringField("Phone Number")
+    message = TextAreaField('Message', validators=[DataRequired()])
+    submit = SubmitField('SEND')
 
 
 @app.route('/')
@@ -38,15 +53,20 @@ def about():
 @app.route('/contact', methods=["GET", "POST"])
 def contact():
     current_year = date.today().year
-    if request.method == "POST":
-        data = request.form
-        send_email(data["name"], data["email"], data["phone"], data["message"])
-        return render_template("contact.html", msg_sent=True, year=current_year)
-    return render_template("contact.html", msg_sent=False, year=current_year)
+    # if request.method == "POST":
+    #     data = request.form
+    #     send_email(data["name"], data["email"], data["phone"], data["message"])
+    #     return render_template("contact.html", msg_sent=True, year=current_year)
+    # return render_template("contact.html", msg_sent=False, year=current_year)
+    form = Contact()
+    if form.validate_on_submit():
+        send_email(form.name.data, form.email.data, form.phone.data, form.message.data)
+        return render_template("contact.html", msg_sent=True, year=current_year, form=form)
+    return render_template("contact.html", msg_sent=False, year=current_year, form=form)
 
 
 def send_email(name, email, phone, message):
-    email_message = f"Subject:New Message\n\nName: {name}\nEmail: {email}\nPhone: {phone}\nMessage:{message}"
+    email_message = f"Subject:New Message From Your Blog\n\nName: {name}\nEmail: {email}\nPhone: {phone}\nMessage:{message}"
     with smtplib.SMTP("smtp.mail.yahoo.com") as connection:
         connection.starttls()
         connection.login(MY_EMAIL, YAHOO_APP_PASSWORD)
