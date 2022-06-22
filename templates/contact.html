@@ -41,8 +41,8 @@
                             <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
                         </div>
                         <div class="form-floating">
-                            <input class="form-control" id="email" type="email" placeholder="Enter your email..." data-sb-validations="required,email" name="email" required/>
-                            <label for="email">Email address</label>
+                            {{ form.email(class="form-control", placeholder="Email", type="email") }}
+                            {{ form.email.label }}
                             <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
                             <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
                         </div>
@@ -52,8 +52,8 @@
                             <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
                         </div>
                         <div class="form-floating">
-                            <textarea class="form-control" id="message" placeholder="Enter your message here..." style="height: 12rem" data-sb-validations="required" name="message" required></textarea>
-                            <label for="message">Message</label>
+                            {{ form.message(class="form-control", placeholder="message", rows="10") }}
+                            {{ form.message.label }}
                             <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
                         </div>
                         <br />

@@ -5,7 +5,7 @@ import smtplib
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField
-from wtforms.validators import DataRequired, Email
+from wtforms.validators import DataRequired
 
 
 MY_EMAIL = "egabtech@yahoo.com"
@@ -22,7 +22,7 @@ Bootstrap(app)
 
 class Contact(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
-    email = StringField("Email address", validators=[DataRequired(), Email()])
+    email = StringField("Email address", validators=[DataRequired()])
     phone = StringField("Phone Number")
     message = TextAreaField('Message', validators=[DataRequired()])
     submit = SubmitField('SEND')
