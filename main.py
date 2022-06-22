@@ -23,7 +23,7 @@ Bootstrap(app)
 class Contact(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     email = StringField("Email address", validators=[DataRequired()])
-    phone = StringField("Phone Number")
+    phone = StringField("Phone Number(Optional)")
     message = TextAreaField('Message', validators=[DataRequired()])
     submit = SubmitField('SEND')
 
