@@ -13,7 +13,7 @@ YAHOO_APP_PASSWORD = "kbpvztnpzmcuzpmq"     # This is not my yahoo password, it'
 TO_EMAIL = "egabtek@gmail.com"              # third-party apps.
 
 
-posts = requests.get("https://api.npoint.io/68f89237263cd44a2e48").json()
+posts = requests.get("https://api.npoint.io/24db6bad18495892e49d").json()
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
